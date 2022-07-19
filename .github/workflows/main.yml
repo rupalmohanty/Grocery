@@ -30,23 +30,23 @@ jobs:
       - name: Install server npm packages
         uses: bahmutov/npm-install@v1
         with:
-          working-directory: mern/server
+          working-directory: backend
 
       - name: Install client npm packages
         uses: bahmutov/npm-install@v1
         with:
-          working-directory: mern/client
+          working-directory: src
 
       - name: Start server in the background
         env: 
           ATLAS_URI: ${{ secrets.ATLAS_URI }}
-        run: (cd mern/server && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
+        run: (cd backend && echo "ATLAS_URI=$ATLAS_URI" > config.env  && npm start &)
 
       - name: Start React app in the background
-        run: (cd mern/client && npm start &)
+        run: (cd src && npm start &)
 
       - name: Install Cypress and run tests
         uses: cypress-io/github-action@v2
         with:
-          working-directory: mern/client
+          working-directory: src
         
